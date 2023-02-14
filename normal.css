@@ -1,0 +1,11 @@
+﻿.img-container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 19px;
+}
+
+.card-img-top {
+    width: 100% !important;
+    object-fit: cover;
+}
