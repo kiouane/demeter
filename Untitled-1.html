@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Displaying All Pictures from a Folder in HTML</title>
+  </head>
+  <body>
+    <h1>My Picture Gallery</h1>
+    <div id="image-container"></div>
+    <script>
+      // Define the folder path and file extension
+      const folderPath = 'images/';
+      const fileExt = '.jpg';
+
+      // Fetch all image file names in the folder
+      fetch(folderPath)
+        .then(response => response.text())
+        .then(data => {
+          const parser = new DOMParser();
+          const html = parser.parseFromString(data, 'text/html');
+          const links = Array.from(html.querySelectorAll('a'));
+          const imageLinks = links.filter(link => link.href.endsWith(fileExt));
+          const imageFileNames = imageLinks.map(link => link.href.split('/').pop());
+
+          // Generate the <img> tags for each image file name
+          const imageContainer = document.getElementById('image-container');
+          imageFileNames.forEach(fileName => {
+            const img = document.createElement('img');
+            img.src = folderPath + fileName;
+            img.alt = fileName;
+            imageContainer.appendChild(img);
+          });
+        })
+        .catch(error => console.error(error));
+    </script>
+  </body>
+</html>
